@@ -1,0 +1,14 @@
+/_build
+/support
+/tests
+/typings
+.editorconfig
+.gitattributes
+.gitignore
+.github
+.npmignore
+.travis.yml
+.tscache
+.vscode
+tsconfig.json
+tslint.json
