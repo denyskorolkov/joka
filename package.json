@@ -36,14 +36,6 @@
       "git add"
     ]
   },
-  "prettier": {
-    "singleQuote": true,
-    "tabWidth": 4,
-    "useTabs": true,
-    "parser": "typescript",
-    "printWidth": 120,
-    "arrowParens": "always"
-  },
   "main": "index.js",
   "repository": "git@github.com:denyskorolkov/joka.git",
   "author": "Denys Korolkov <denys@korolkov.pro>",
