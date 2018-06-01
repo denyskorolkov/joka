@@ -8,11 +8,8 @@
     "@dojo/loader": "~0.1.0",
     "intern": "~4.1.4"
   },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "prettier --write",
-      "git add"
-    ]
+  "scripts": {
+    "test": "tsc --watch -p 'tsconfig.json' & npx intern serveOnly"
   },
   "main": "index.js",
   "repository": "git@github.com:denyskorolkov/joka.git",
