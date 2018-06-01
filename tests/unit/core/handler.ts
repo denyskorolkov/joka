@@ -1,10 +1,15 @@
-import handler from '../../../src/core/handler';
+import { setId } from '../../../src/core/handler';
 
 const { registerSuite } = intern.getInterface('object');
 const { assert } = intern.getPlugin('chai');
 
-registerSuite('Handler', {
-	'set method exists'() {
-		assert.isDefined(handler.set, 'handler method `set` is defined');
+registerSuite(`jOka => handlers`, {
+	setId() {
+		let obj = {};
+		assert.equal(setId.call({}), `#0`);
+		assert.equal(setId.call(obj), `#1`);
+		assert.equal(setId.call({}, `name`), `name`);
+		assert.equal(setId.call({}, `prefix`, true), `prefix#2`);
+		assert.equal(setId.call(obj), `#1`);
 	}
 });
