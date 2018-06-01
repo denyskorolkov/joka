@@ -1,4 +1,4 @@
-import { getArray } from './helpers';
+// import { getArray } from './helpers';
 
 interface Handler {
 	[index: string]: any;
@@ -18,10 +18,10 @@ let countId: number = 0;
  * Set if property id doesn't exist and get it
  *
  * @export
- * @this {object}
- * @param {string} name
- * @param {boolean} isPrefix
- * @return {string} id associated with this
+ * @this {object} Instance
+ * @param {string} name Id or Prefix
+ * @param {boolean} isPrefix Generate id with prefix (ex. `controller#12`)
+ * @return {string} Id associated with `this` instance
  */
 export function setId(this: object, name: string = ``, isPrefix: boolean = false) {
 	// exe("log", "handler", this, name);
