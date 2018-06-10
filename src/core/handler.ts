@@ -1,18 +1,43 @@
 // import { getArray } from './helpers';
 
-interface Handler {
+const ID = Symbol.for('id');
+const DATA = Symbol.for('data');
+
+interface Handlers {
 	[index: string]: any;
+}
+
+interface Handler {
+	[ID]: string;
+	[DATA]: object;
 }
 
 interface HandlerSetting {
 	id: string;
-	ids?: string[];
+	ids?: Set<string>;
 }
 
 export const handlers: Handler = {};
 
 export const handlerSettings = new WeakMap<object, HandlerSetting>();
 let countId: number = 0;
+
+Object.defineProperties(Object.prototype, {
+	[ID]: {
+		get: function(): string | null {
+			let setting = handlerSettings.get(this);
+			return setting ? setting.id : null;
+		}
+	},
+	[DATA]: {
+		get: function(): HandlerSetting | null {
+			let setting = handlerSettings.get(this);
+			return setting || null;
+		}
+	}
+});
+
+// TODO: add destroy for [ID], [DATA];
 
 /**
  * Set id if property that doesn't exist and get it
@@ -23,23 +48,22 @@ let countId: number = 0;
  * @param {boolean} isPrefix Generate id with prefix (ex. `controller#12`)
  * @return {string} Id associated with `this` instance
  */
-export function setId(this: object, name: string = ``, isPrefix: boolean = false) {
-	// TODO: exe("log", "handler", this, name);
-	let handlerSetting = handlerSettings.get(this);
+export function setInstance(this: Handler) {
+	// TODO: exe(`log`, `handler`, `setId`, this);
+	let id: string;
 
-	if (handlerSetting) {
-		return handlerSetting.id;
+	if ((id = this[ID])) {
+		return id;
 	}
 
-	if (!name || isPrefix) {
-		name = `${name}#${countId++}`;
-	}
+	id = `${typeof this}#${countId++}`;
 
 	handlerSettings.set(this, {
-		id: name
+		id: id,
+		ids: new Set()
 	});
 
-	return name;
+	return id;
 }
 
 const BRACKETS = /[()]/g;
@@ -148,9 +172,11 @@ export function set(this: any, a: any, b?: any): void {
 }
 
 export default {
+	ID,
 	has,
 	set,
-	setId,
+	DATA,
 	handlers,
+	setInstance,
 	getRelevantId
 };
